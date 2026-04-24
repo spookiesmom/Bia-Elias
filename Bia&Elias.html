@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save the Date - Bia & Elias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* Degradê suavizado e clarinho com suas cores base */
+            background: linear-gradient(135deg, #dce4f0 0%, #f7e2e0 35%, #fef3eb 70%, #dce1e9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 24px;
+            color: #5a6b8a; /* Um azul acinzentado suave para leitura no fundo claro */
+        }
+
+        .font-cursive { font-family: 'Great Vibes', cursive; color: #4a5a77; }
+        .font-serif { font-family: 'Cinzel', serif; }
+
+        /* Animação suave ao abrir */
+        .fade-in {
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-center">
+
+    <div class="max-w-xl w-full fade-in">
+        
+        <header class="mb-12">
+            <p class="font-serif tracking-[0.4em] text-[10px] md:text-xs uppercase mb-4 opacity-80">
+                Junte-se a nós para celebrar este momento especial
+            </p>
+            <div class="flex justify-center items-center gap-6">
+                <span class="h-[0.5px] w-12 bg-[#5a6b8a]/30"></span>
+                <span class="text-xs opacity-60">☀️</span>
+                <span class="h-[0.5px] w-12 bg-[#5a6b8a]/30"></span>
+            </div>
+            <p class="font-serif text-[11px] mt-4 tracking-[0.3em] uppercase opacity-70">Ao nascer do sol</p>
+        </header>
+
+        <main class="space-y-0 mb-12">
+            <h1 class="font-cursive text-8xl md:text-9xl leading-none">Bia</h1>
+            <p class="font-cursive text-5xl md:text-6xl my-2 opacity-60">&</p>
+            <h1 class="font-cursive text-8xl md:text-9xl leading-none">Elias</h1>
+        </main>
+
+        <section class="space-y-8">
+            <div class="font-serif py-8">
+                <p class="text-3xl md:text-4xl tracking-[0.25em] font-light mb-2">21 DE JUNHO</p>
+                <p class="text-[11px] uppercase tracking-[0.5em] opacity-80 font-medium italic">Às 06:00 da manhã</p>
+            </div>
+            
+            <div class="space-y-2">
+                <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.2em]">Praia do Santinho</p>
+                <p class="text-[10px] md:text-[11px] opacity-70 uppercase tracking-widest">Canto dos Ingleses — Florianópolis, SC</p>
+            </div>
+        </section>
+
+        <footer class="mt-16">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.5em] opacity-60 mb-8">
+                Contamos com a sua presença
+            </p>
+            
+            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Casamento+de+Bia+e+Elias&dates=20260621T090000Z/20260621T150000Z&details=Celebração+ao+nascer+do+sol+na+Praia+do+Santinho!&location=Praia+do+Santinho,+Florianópolis+-+SC" 
+               target="_blank"
+               class="inline-block bg-white/60 hover:bg-white text-[#92abd3] font-semibold py-4 px-10 rounded-full shadow-sm transition-all hover:scale-105 active:scale-95 uppercase text-[10px] tracking-[0.2em] border border-white/40">
+                Adicionar à Agenda
+            </a>
+        </footer>
+
+    </div>
+
+</body>
+</html>
