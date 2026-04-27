@@ -5,134 +5,195 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date - Bia & Elias</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
+        html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; background: #f5edd5; }
         body {
-            /* Degradê vertical equilibrado: Nem tão pesado, nem tão pálido */
-            background: linear-gradient(to bottom, 
-                #4e6174 0%,    /* Azul horizonte mais definido */
-                #d19e8a 40%,   /* Laranja pêssego suave */
-                #e8c8b5 75%,   /* Areia quente */
-                #f5edd5 100%   /* Creme solar */
-            );
-            min-height: 100vh;
+            background: linear-gradient(to bottom, #4e6174 0%, #d19e8a 40%, #e8c8b5 75%, #f5edd5 100%);
+            color: #4b3832;
+            font-family: 'Lato', sans-serif;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        /* Envelope / Entrada */
+        #envelope {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f5edd5;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 24px;
-            color: #4b3832; /* Voltamos para o marrom café profundo para melhor leitura */
-            position: relative;
-            overflow-x: hidden;
+            z-index: 2000;
+            cursor: pointer;
+            transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease;
         }
 
-        /* Camada de Textura de Papel Aquarela */
-        body::before {
+        #envelope::before {
             content: "";
-            position: fixed;
+            position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
-            opacity: 0.4;
-            pointer-events: none;
-            z-index: 1;
-            mix-blend-mode: multiply;
+            opacity: 0.6;
         }
 
-        /* Camada extra para grão de aquarela */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-            opacity: 0.2;
-            pointer-events: none;
-            z-index: 2;
+        .envelope-card {
+            position: relative;
+            z-index: 10;
+            padding: 3.5rem 2rem;
+            border: 1px solid rgba(75, 56, 50, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            max-width: 320px;
+            width: 85%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        /* Pontos de Brilho Sutis (Stardust) */
+        /* Iniciais com o & menor */
+        .initials-entrance {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: #4b3832;
+            line-height: 1;
+        }
+        .initials-entrance span {
+            font-size: 2.8rem; /* & propositalmente menor */
+            opacity: 0.6;
+            margin: 0 10px;
+        }
+
+        /* --- ANIMAÇÃO DO CORAÇÃO PULSANDO --- */
+        .heart-pulse {
+            font-size: 2.2rem;
+            color: #4b3832;
+            opacity: 0.6;
+            margin-top: 1.5rem;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite ease-in-out;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.25); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Estados de Abertura */
+        .opened { overflow-y: auto !important; }
+        .opened #envelope { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .opened #invitation-content { opacity: 1; visibility: visible; }
+
+        #invitation-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.8s ease-out 0.8s;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* Efeitos e Fontes Internas */
         .stardust {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 3;
-            background-image: 
-                radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-                radial-gradient(circle, rgba(255, 255, 255, 0.6) 1.5px, transparent 1.5px),
-                radial-gradient(circle, rgba(255, 252, 230, 0.5) 2px, transparent 2px);
-            background-size: 550px 550px, 350px 350px, 450px 450px;
-            background-position: 0 0, 40px 60px, 130px 270px;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px), radial-gradient(circle, rgba(255, 255, 255, 0.6) 1.5px, transparent 1.5px);
+            background-size: 550px 550px, 350px 350px;
             opacity: 0.6;
         }
 
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-        }
-
         .font-cursive { font-family: 'Great Vibes', cursive; color: #4b3832; }
-        .font-serif { font-family: 'Cinzel', serif; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
 
-        .fade-in {
-            animation: fadeIn 2.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn-custom {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            color: #4b3832;
+            font-weight: 700;
+            padding: 1rem 0;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.2em; 
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: inline-block;
         }
     </style>
 </head>
-<body class="text-center">
+<body>
 
-    <div class="stardust"></div>
+    <audio id="bgMusic" loop>
+        <source src="SUA_MUSICA.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="max-w-xl w-full content-wrapper fade-in">
-        
-        <header class="mb-12">
-            <p class="font-serif tracking-[0.4em] text-[10px] md:text-xs uppercase mb-4 opacity-80 font-medium text-[#4b3832]">
-                Junte-se a nós para celebrar este momento especial
-            </p>
-            <p class="font-serif text-[11px] mt-2 tracking-[0.3em] uppercase opacity-70">Ao nascer do sol</p>
-        </header>
-
-        <main class="mb-12 flex items-center justify-center gap-4 md:gap-6 flex-wrap">
-            <h1 class="font-cursive text-7xl md:text-8xl leading-none drop-shadow-sm">Bia</h1>
-            <p class="font-cursive text-5xl md:text-6xl opacity-60 leading-none">&</p>
-            <h1 class="font-cursive text-7xl md:text-8xl leading-none drop-shadow-sm">Elias</h1>
-        </main>
-
-        <section class="space-y-8 text-[#4b3832]">
-            <div class="font-serif py-8 border-y border-[#4b3832]/10">
-                <p class="text-3xl md:text-4xl tracking-[0.25em] font-light mb-2">21 DE JUNHO</p>
-                <p class="text-[11px] uppercase tracking-[0.5em] opacity-80 font-medium italic text-[#4b3832]">Às 06:00 da manhã</p>
+    <div id="envelope" onclick="openInvitation()">
+        <div class="envelope-card text-center">
+            <h2 class="font-cinzel text-[10px] tracking-[0.5em] uppercase mb-8 opacity-40">Save the Date</h2>
+            
+            <div class="initials-entrance">
+                B<span>&</span>E
             </div>
             
-            <div class="space-y-2">
-                <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.2em]">Praia do Santinho</p>
-                <p class="text-[10px] md:text-[11px] opacity-70 uppercase tracking-widest">Canto dos Ingleses — Florianópolis, SC</p>
-            </div>
-        </section>
-
-        <footer class="mt-16 flex flex-col items-center gap-4">
-            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.5em] opacity-60 mb-4 font-medium text-[#4b3832]">
-                Contamos com a sua presença
-            </p>
+            <div class="font-cinzel text-[9px] tracking-[0.3em] uppercase opacity-60 mt-10">Toque para abrir</div>
             
-            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Casamento+de+Bia+e+Elias&dates=20260621T090000Z/20260621T150000Z&details=Celebração+ao+nascer+do+sol+na+Praia+do+Santinho!&location=Praia+do+Santinho,+Florianópolis+-+SC" 
-               target="_blank"
-               class="inline-block w-64 bg-white/50 hover:bg-white text-[#4b3832] font-semibold py-4 rounded-full shadow-sm transition-all hover:scale-105 active:scale-95 uppercase text-[10px] tracking-[0.2em] border border-white/40 backdrop-blur-sm">
-                Adicionar à Agenda
-            </a>
-
-            <a href="https://www.google.com/maps/search/?api=1&query=-27.451069,-48.371152" 
-               target="_blank"
-               class="inline-block w-64 bg-transparent hover:bg-white/20 text-[#4b3832] font-medium py-3 rounded-full transition-all hover:scale-105 active:scale-95 uppercase text-[9px] tracking-[0.2em] border border-[#4b3832]/30">
-                Como Chegar
-            </a>
-        </footer>
-
+            <div class="heart-pulse">♥</div>
+        </div>
     </div>
 
+    <div id="invitation-content">
+        <div class="stardust"></div>
+        <div class="max-w-xl mx-auto text-center px-6">
+            <header class="pt-24 mb-16">
+                <p class="tracking-[0.1em] text-[10px] md:text-xs uppercase font-bold opacity-90">
+                    Junte-se a nós para celebrar este momento especial
+                </p>
+            </header>
+
+            <main class="mb-16 flex items-center justify-center gap-4 md:gap-6 flex-wrap">
+                <h1 class="font-cursive text-7xl md:text-8xl">Bia</h1>
+                <p class="font-cursive text-5xl md:text-6xl opacity-60">&</p>
+                <h1 class="font-cursive text-7xl md:text-8xl">Elias</h1>
+            </main>
+
+            <section class="space-y-8">
+                <div class="py-10 border-y border-[#4b3832]/10">
+                    <p class="font-cinzel tracking-[0.15em] font-medium text-3xl md:text-4xl uppercase">
+                        21 de Junho
+                    </p>
+                    <p class="text-[10px] uppercase tracking-[0.3em] opacity-80 font-bold mt-3">Às 06:00 da manhã</p>
+                </div>
+                
+                <div class="space-y-2">
+                    <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.2em]">Praia do Santinho</p>
+                    <p class="text-[10px] md:text-[11px] opacity-75 uppercase tracking-[0.1em]">Canto dos Ingleses — Florianópolis, SC</p>
+                    <p class="text-[10px] mt-4 tracking-[0.25em] uppercase opacity-70 font-bold">Ao nascer do sol</p>
+                </div>
+            </section>
+
+            <footer class="mt-20 flex flex-col items-center gap-4 pb-20">
+                <p class="text-[10px] md:text-[11px] uppercase tracking-[0.15em] opacity-80 mb-4 font-bold">
+                    Contamos com a sua presença! ♥
+                </p>
+                <a href="https://wa.me/557184243255?text=Oi!+Gostaria+de+confirmar+minha+presença+no+casamento+da+Bia+e+do+Elias!" target="_blank" class="btn-custom">Confirmar Presença</a>
+                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Casamento+de+Bia+e+Elias&dates=20260621T090000Z/20260621T150000Z&details=Celebração+ao+nascer+do+sol!&location=-27.451069,-48.371152" target="_blank" class="btn-custom">Adicionar à Agenda</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=-27.451069,-48.371152" target="_blank" class="btn-custom">Como Chegar</a>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function openInvitation() {
+            document.body.classList.add('opened');
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => {
+                console.log("Música aguardando interação.");
+            });
+        }
+    </script>
 </body>
 </html>
