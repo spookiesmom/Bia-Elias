@@ -7,9 +7,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; background: #f5edd5; }
+        /* --- CONFIGURAÇÕES DO DEGRADÊ ORIGINAL (PRINCIPAL) --- */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            min-height: 100vh; 
+            background-color: #f5edd5; 
+        }
+        
         body {
             background: linear-gradient(to bottom, #4e6174 0%, #d19e8a 40%, #e8c8b5 75%, #f5edd5 100%);
+            background-attachment: fixed; 
+            background-size: cover;
+            background-repeat: no-repeat;
             color: #4b3832;
             font-family: 'Lato', sans-serif;
             overflow-x: hidden;
@@ -49,7 +60,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        /* Iniciais com o & menor */
         .initials-entrance {
             font-family: 'Great Vibes', cursive;
             font-size: 4.5rem;
@@ -57,12 +67,11 @@
             line-height: 1;
         }
         .initials-entrance span {
-            font-size: 2.8rem; /* & propositalmente menor */
+            font-size: 2.8rem;
             opacity: 0.6;
             margin: 0 10px;
         }
 
-        /* --- ANIMAÇÃO DO CORAÇÃO PULSANDO --- */
         .heart-pulse {
             font-size: 2.2rem;
             color: #4b3832;
@@ -95,7 +104,6 @@
             width: 100%;
         }
 
-        /* Efeitos e Fontes Internas */
         .stardust {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -113,6 +121,7 @@
             width: 260px;
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #4b3832;
             font-weight: 700;
             padding: 1rem 0;
@@ -122,7 +131,117 @@
             letter-spacing: 0.2em; 
             border: 1px solid rgba(255, 255, 255, 0.4);
             display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
+
+        .btn-custom:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- PÁGINA DE PRESENTES (OVERLAY) CORRIGIDA PARA SEMPRE --- */
+        #gift-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0; /* Preenche a tela 100% garantido */
+            background: linear-gradient(to bottom, #d19e8a 0%, #e8c8b5 40%, #f5edd5 100%);
+            z-index: 3000;
+            overflow: hidden; /* O SEGREDO: A página de fundo NÃO ROLA, fica sempre fixa */
+            visibility: hidden;
+            transform: translateY(100%);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), visibility 1.2s;
+        }
+
+        #gift-overlay.active {
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .gift-paper-texture::before {
+            content: "";
+            position: absolute; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ESSA CAIXA AQUI FAZ O SCROLL DE FORMA INDEPENDENTE */
+        .overlay-scroll-container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow-x: hidden;
+            overflow-y: auto; 
+            padding: 80px 24px 60px 24px;
+            z-index: 10;
+        }
+
+        .btn-close {
+            position: absolute; 
+            top: 20px;
+            right: 20px;
+            background: rgba(253, 251, 247, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(75, 56, 50, 0.1);
+            font-size: 28px;
+            color: #4b3832;
+            cursor: pointer;
+            z-index: 3010;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .btn-close:hover { 
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        /* --- FOTOS POLAROID --- */
+        .photo-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .photo-grid {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+        }
+
+        .photo-frame {
+            background-color: #fdfbf7;
+            padding: 10px 10px 20px 10px;
+            box-shadow: 0 8px 20px rgba(75, 56, 50, 0.15);
+            border-radius: 2px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .left-photo { transform: rotate(-10deg); z-index: 1; }
+        .center-photo { transform: rotate(0deg); z-index: 2; position: relative; max-width: 280px; }
+        .right-photo { transform: rotate(30deg); z-index: 1; }
+
     </style>
 </head>
 <body>
@@ -134,13 +253,8 @@
     <div id="envelope" onclick="openInvitation()">
         <div class="envelope-card text-center">
             <h2 class="font-cinzel text-[10px] tracking-[0.5em] uppercase mb-8 opacity-40">Save the Date</h2>
-            
-            <div class="initials-entrance">
-                B<span>&</span>E
-            </div>
-            
+            <div class="initials-entrance">B<span>&</span>E</div>
             <div class="font-cinzel text-[9px] tracking-[0.3em] uppercase opacity-60 mt-10">Toque para abrir</div>
-            
             <div class="heart-pulse">♥</div>
         </div>
     </div>
@@ -149,7 +263,7 @@
         <div class="stardust"></div>
         <div class="max-w-xl mx-auto text-center px-6">
             <header class="pt-24 mb-16">
-                <p class="tracking-[0.1em] text-[10px] md:text-xs uppercase font-bold opacity-90">
+                <p class="tracking-[0.1em] text-[10px] md:text-xs uppercase font-bold opacity-90 leading-relaxed">
                     Junte-se a nós para celebrar este momento especial
                 </p>
             </header>
@@ -169,8 +283,8 @@
                 </div>
                 
                 <div class="space-y-2">
-                    <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.2em]">Praia do Santinho</p>
-                    <p class="text-[10px] md:text-[11px] opacity-75 uppercase tracking-[0.1em]">Canto dos Ingleses — Florianópolis, SC</p>
+                    <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.2em]">Espaço Ondas</p>
+                    <p class="text-[10px] md:text-[11px] opacity-75 uppercase tracking-[0.1em]">Estr. Dom João Becker, 1765 — Florianópolis, SC</p>
                     <p class="text-[10px] mt-4 tracking-[0.25em] uppercase opacity-70 font-bold">Ao nascer do sol</p>
                 </div>
             </section>
@@ -179,10 +293,48 @@
                 <p class="text-[10px] md:text-[11px] uppercase tracking-[0.15em] opacity-80 mb-4 font-bold">
                     Contamos com a sua presença! ♥
                 </p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Espaço+Ondas+Florianópolis&query_place_id=ChIJHegllRdqJ5URsqNqWOM0GJI" target="_blank" class="btn-custom">Como Chegar</a>
                 <a href="https://wa.me/557184243255?text=Oi!+Gostaria+de+confirmar+minha+presença+no+casamento+da+Bia+e+do+Elias!" target="_blank" class="btn-custom">Confirmar Presença</a>
-                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Casamento+de+Bia+e+Elias&dates=20260621T090000Z/20260621T150000Z&details=Celebração+ao+nascer+do+sol!&location=-27.451069,-48.371152" target="_blank" class="btn-custom">Adicionar à Agenda</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=-27.451069,-48.371152" target="_blank" class="btn-custom">Como Chegar</a>
+                <button onclick="toggleGiftOverlay()" class="btn-custom">Presentear os noivos</button>
             </footer>
+        </div>
+    </div>
+
+    <div id="gift-overlay" class="gift-paper-texture">
+        <div class="overlay-scroll-container">
+            <button onclick="toggleGiftOverlay()" class="btn-close">×</button>
+            
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                
+                <header>
+                    <h1 class="font-cursive text-5xl md:text-6xl text-[#4b3832] mt-4">Nosso Primeiro Destino</h1>
+                </header>
+
+                <div class="photo-grid">
+                    <div class="photo-frame left-photo">
+                        <img src="foto_esquerda.jpeg" alt="Noivos na neve">
+                    </div>
+                    <div class="photo-frame center-photo">
+                        <img src="foto_centro.jpeg" alt="Pedido de casamento">
+                    </div>
+                    <div class="photo-frame right-photo">
+                        <img src="foto_direita.jpeg" alt="Noivos na cidade">
+                    </div>
+                </div>
+
+                <section class="space-y-6 px-6 max-w-2xl mx-auto">
+                    <p class="font-bold text-[11px] md:text-xs uppercase tracking-[0.15em] mt-8">Onde o nosso novo capítulo começa.</p>
+                    <p class="text-[12px] md:text-sm leading-relaxed opacity-90">Ter a presença de vocês celebrando o nascer do sol conosco já é o nosso maior e mais esperado presente. Mas, se além de boas energias você desejar nos presentear de outra forma, decidimos trocar a tradicional lista de itens para a casa por memórias inesquecíveis. Nossa jornada a dois começará sob o sol e a brisa leve da Bahia. Cada carinho recebido será transformado em momentos especiais nessa primeira viagem.</p>
+                </section>
+
+                <section class="space-y-6 pt-8 max-w-sm mx-auto">
+                    <p class="text-sm md:text-base uppercase tracking-[0.15em] opacity-75 font-cinzel">Para nos presentear com memórias</p>
+                    <div class="px-6 pb-20">
+                        <img src="qrcode_pix.png" alt="Código PIX dos Noivos" class="mx-auto rounded-md shadow-inner w-full h-auto border-2 border-dashed border-[#4b3832]/20 p-4 bg-white/20">
+                    </div>
+                </section>
+
+            </div>
         </div>
     </div>
 
@@ -190,9 +342,20 @@
         function openInvitation() {
             document.body.classList.add('opened');
             const music = document.getElementById('bgMusic');
-            music.play().catch(e => {
-                console.log("Música aguardando interação.");
-            });
+            music.play().catch(e => console.log("Música aguardando interação."));
+        }
+
+        function toggleGiftOverlay() {
+            const overlay = document.getElementById('gift-overlay');
+            const invitationContent = document.getElementById('invitation-content');
+            overlay.classList.toggle('active');
+            invitationContent.classList.toggle('blur-sm'); 
+            
+            if (overlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
     </script>
 </body>
